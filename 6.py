@@ -28,18 +28,6 @@ def diejkstra(g, n):
 				p[to] = v
 
 	print(d)
-    
-	for i in range(1, n):
-		v = i
-		path = []
-		while v != s:
-			v = p[v]
-			path.insert(0, v)
-
-		path.append(i)
-
-		print(path)
-
 
 if __name__ == '__main__':
 	with open('6_in.json') as f_d:
