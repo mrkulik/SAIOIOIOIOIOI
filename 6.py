@@ -6,9 +6,9 @@ def diejkstra(g, n):
 	s = 0
 	d = [inf] * n
 	p = [0] * n
-	
 	d[s] = 0
 	used = [False] * n
+	
 	for i in range(n):
 		v = -1
 		for j in range(n):
