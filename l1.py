@@ -33,10 +33,10 @@ def get_j0(A):
     return ans[0]
 
 def simplex(c, A, b, d_bottom, d_top, J_b=None):
-    x, y, J_b = simplex2(c, A, b, d_bottom, d_top, J_b)
+    x, y, J_b = simplex_next(c, A, b, d_bottom, d_top, J_b)
     return x, J_b
 
-def simplex2(c, A, b, d_bottom, d_top, J_b=None):
+def simplex_next(c, A, b, d_bottom, d_top, J_b=None):
     c = np.array(c)
     b = np.array(b)
     A = np.array(A)
