@@ -29,23 +29,23 @@ if __name__ == '__main__':
 	B, x = belman(c, n)
 	for b in B:
 		print(b)
-	print("\n")
+	print("---------------------------------")
 	for x_i in x:
 		print(x_i)
-	print("\n")
+	print("---------------------------------")
 	
 	left = c - 1
-	x0 = []
+	x_max = []
 	
 	# step 2: count result
 	# step 2.1 find max profit of task
-	x0 += [x[n-1][B[n-1].index(max(B[n-1]))]]
+	x_max += [x[n-1][B[n-1].index(max(B[n-1]))]]
 	# step 2.2: count left resourses
 	left -= x[n-1][B[n-1].index(max(B[n-1]))]
 	# allocate left resourses between left agents
 	for i in range(n - 2, 0, -1):
-		x0 += [x[i][left]]
+		x_max += [x[i][left]]
 		left -= x[i][left]
 
-	x0 += [left]
-	print(x0)
+	x_max += [left]
+	print(x_max)

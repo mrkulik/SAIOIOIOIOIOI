@@ -30,13 +30,15 @@ def FordFulkerson(start, end):
     while BFS(start, end, parent):
         path_flow = 1000
         s = end
+        #step 2: find shape with minimal flow
         while s != start:
             path_flow = min(path_flow, graph[parent[s]][s])
             s = parent[s]
-
+		#step 3: counting max_flow
         max_flow += path_flow
 
         t = end
+        #step 4: for straight shapes flow ++ // for reversed shapes flow--
         while t != start:
             u = parent[t]
             graph[u][t] -= path_flow
@@ -50,4 +52,4 @@ if __name__ == '__main__':
     with open('8.json') as fp:
         graph = json.load(fp)
 
-    print("Max:", FordFulkerson(0, 5))
+    print("Max:", FordFulkerson(0, 4))
