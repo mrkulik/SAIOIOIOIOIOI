@@ -68,34 +68,34 @@ def simplex_next(c, A, b, d_bottom, d_top, J_b=None):
     while _i < 100:
         _i += 1
         # step 2.1: count khi
-        cappa = np.zeros(n)
+        cap = np.zeros(n)
         for i in Jn_plus:
-            cappa[i] = d_bottom[i]
+            cap[i] = d_bottom[i]
         for i in Jn_minus:
-            cappa[i] = d_top[i]
+            cap[i] = d_top[i]
 
         s = np.zeros(m)
         for i in J_n:
-            s += np.dot(A[:, i], cappa[i])
+            s += np.dot(A[:, i], cap[i])
         d_xi = np.dot(B, b - s)
         for val, ind in enumerate(J_b):
-            cappa[ind] = d_xi[val]
+            cap[ind] = d_xi[val]
 		#step 3: check optimal crit
         success = []
         for i in J_b:
-            success.append(d_bottom[i] - EPS <= cappa[i] <= d_top[i] + EPS)
+            success.append(d_bottom[i] - EPS <= cap[i] <= d_top[i] + EPS)
 
         if all(success):
-            return cappa, -np.dot(c[J_b], B), J_b
-
+            return cap, -np.dot(c[J_b], B), J_b
+		#find index Jk 
         jk = np.inf
 
         for val, i in enumerate(J_b):
-            if cappa[i] < d_bottom[i] - EPS or cappa[i] > d_top[i] + EPS:
+            if cap[i] < d_bottom[i] - EPS or cap[i] > d_top[i] + EPS:
                 if jk > i:
                     jk, k = i, val
 
-        m_j_k = 1 if cappa[jk] < d_bottom[jk] else -1
+        m_j_k = 1 if cap[jk] < d_bottom[jk] else -1
         delta_y = np.dot(m_j_k, np.dot(np.eye(m, m)[:, k], B))
         mu = np.zeros(n)
         for i in J_n:

@@ -4,11 +4,9 @@ import json
 
 
 def belman(c, n):
-	# step 1.1 Matrix B - pick 1st str from input matrix + another [0]
+	# step 1.1 Matrix B - pick 1st str from input matrix + another [0], create matrix x of indexes [0], count Belman func
 	B = [table[0]] + [[0 for i in range(c)] for j in range(1, n)]
-	# step 1.2: create matrix x of indexes [0]
 	x = [[0 for i in range(c)] for j in range(n)]
-	# step 1.3: count Belman func
 	for i in range(1, n):
 		for j in range(1, c):
 			values = []
