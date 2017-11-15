@@ -4,11 +4,11 @@ import json
 
 
 def belman(c, n):
-	# берем 1 строку исходного графа, остальные заполняем нулями
+	# step 1.1 Matrix B - pick 1st str from input matrix + another [0]
 	B = [table[0]] + [[0 for i in range(c)] for j in range(1, n)]
-	# в x будем записывать индекс, на котором дистигается максимум ф-ции Белмана
+	# step 1.2: create matrix x of indexes [0]
 	x = [[0 for i in range(c)] for j in range(n)]
-	# Считаем функцию Белмана
+	# step 1.3: count Belman func
 	for i in range(1, n):
 		for j in range(1, c):
 			values = []
@@ -23,10 +23,9 @@ if __name__ == '__main__':
 	table = []
 	with open("4.json") as fp:
 		table = json.load(fp)
-	# колличество столбцов
 	c = len(table[0])
-	# колличество строк
 	n = len(table)
+	#step 1: count Belman func(return dostig maximum func matrix + indexes of max)
 	B, x = belman(c, n)
 	for b in B:
 		print(b)
@@ -37,11 +36,13 @@ if __name__ == '__main__':
 	
 	left = c - 1
 	x0 = []
-	# находим максимальную прибыль в задаче
+	
+	# step 2: count result
+	# step 2.1 find max profit of task
 	x0 += [x[n-1][B[n-1].index(max(B[n-1]))]]
-	# колличество рессурсов оставшихся на остальные процессы
+	# step 2.2: count left resourses
 	left -= x[n-1][B[n-1].index(max(B[n-1]))]
-	# идем по матрице x и смотрим, как распределить оставшиеся ресурсы между
+	# allocate left resourses between left agents
 	for i in range(n - 2, 0, -1):
 		x0 += [x[i][left]]
 		left -= x[i][left]

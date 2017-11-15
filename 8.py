@@ -1,6 +1,7 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 import json
 
-# Поиск в ширину, O(N+M)
 def BFS(s, t, parent):
     visited = [False] * (len(graph))
 
@@ -21,27 +22,22 @@ def BFS(s, t, parent):
     return True if visited[t] else False
 
 
-# Возвращает максимальный поток из s в t
-def FordFulkerson(source, sink):
+def FordFulkerson(start, end):
     parent = [-1] * len(graph)
 
     max_flow = 0
-
-    # Пока имеются пути из s в t
-    while BFS(source, sink, parent):
-        path_flow = float("Inf")
-        s = sink
-        # Находим ребро с минимальной пропускной способностью
-        while s != source:
+	#step 1: run untill we can reach t from s
+    while BFS(start, end, parent):
+        path_flow = 1000
+        s = end
+        while s != start:
             path_flow = min(path_flow, graph[parent[s]][s])
             s = parent[s]
 
         max_flow += path_flow
 
-        t = sink
-        # Для прямых дуг увеличиваем поток на мин. пропускн. способн.
-        # Для обратных - уменьшаем поток на мин. пропускн. способн.
-        while t != source:
+        t = end
+        while t != start:
             u = parent[t]
             graph[u][t] -= path_flow
             graph[t][u] += path_flow
@@ -54,4 +50,4 @@ if __name__ == '__main__':
     with open('8.json') as fp:
         graph = json.load(fp)
 
-    print("Максимальный поток:", FordFulkerson(0, 5))
+    print("Max:", FordFulkerson(0, 5))
