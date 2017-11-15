@@ -46,6 +46,7 @@ def simplex_next(c, A, b, d_bottom, d_top, J_b=None):
     n, m = len(c), len(b)
     if J_b == None:
         J_b = get_j0(A)
+    #step 1: find m-vect, delta - vect ocenok, Jb Jn J+ J-
     A_b = A[:, J_b]
     print(A_b)
     B = inv(A_b)
@@ -63,10 +64,10 @@ def simplex_next(c, A, b, d_bottom, d_top, J_b=None):
             Jn_minus.append(index)
 
     _i = 0
+    #step 2: LLEEEEROOOY JEEENKINS RUN TILL THE END
     while _i < 100:
         _i += 1
-        # print('iter: ' + str(_i))
-        # print('J: {1}\n'.format(y, J_b))
+        # step 2.1: count khi
         cappa = np.zeros(n)
         for i in Jn_plus:
             cappa[i] = d_bottom[i]
@@ -79,7 +80,7 @@ def simplex_next(c, A, b, d_bottom, d_top, J_b=None):
         d_xi = np.dot(B, b - s)
         for val, ind in enumerate(J_b):
             cappa[ind] = d_xi[val]
-
+		#step 3: check optimal crit
         success = []
         for i in J_b:
             success.append(d_bottom[i] - EPS <= cappa[i] <= d_top[i] + EPS)
